@@ -416,6 +416,7 @@ public class MainScreen extends Activity  {
 
                             if (device.getName() != null)
                             {
+                                num_devices = -1;
                                 switch (device.getName()){
                                     case "FF-145":
                                         num_devices = 0;
@@ -426,6 +427,8 @@ public class MainScreen extends Activity  {
                                     case "FF-160":
                                         num_devices = 2;
                                 }
+                                if(num_devices<0)
+                                    return; 
                                 beacons[num_devices].device = device;
                                 beacons[num_devices].deviceRSSI = rssi;
                                 deviceseen[num_devices] = true;
