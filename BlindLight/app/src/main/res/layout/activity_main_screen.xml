@@ -7,10 +7,133 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.work.blindlight.MainScreen">
+    tools:context="com.example.work.blindlight.MainScreen"
+    android:background="#aff0ff">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="BlindLight"
+        android:id="@+id/title"
+        android:editable="false"
+        android:enabled="false"
+        android:textColor="#233fcd"
+        android:textIsSelectable="false"
+        android:textSize="70dp"
+        android:layout_marginTop="51dp"
+        android:shadowColor="#000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:singleLine="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageButton"
+        android:src = "@drawable/info"
+        android:background="@null"
+
+        android:layout_below="@+id/title"
+        android:layout_toStartOf="@+id/imageButton2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Visual Info"
+        android:id="@+id/textView"
+        android:textColor="#000000"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/imageButton"
+        android:paddingTop="40dp"
+
+        android:layout_toStartOf="@+id/imageButton2" />
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageButton2"
+        android:src = "@drawable/navigation"
+        android:background="@null"
+
+        android:layout_below="@+id/title"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Navigate me!"
+        android:id="@+id/textView2"
+        android:layout_alignEnd="@+id/imageButton2"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/imageButton"
+        android:textColor="#000000"
+        android:gravity="center"
+
+        android:layout_marginBottom="0dp" />
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageButton3"
+        android:src = "@drawable/location"
+        android:background="@null"
+
+        android:layout_alignEnd="@+id/imageButton2"
+        android:layout_toEndOf="@+id/imageButton"
+        android:layout_below="@+id/imageButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Where am I?"
+        android:id="@+id/textView3"
+        android:textColor="#000000"
+        android:gravity="center"
+
+        android:paddingTop="0dp"
+        android:layout_alignBottom="@+id/imageButton3"
+        android:layout_alignStart="@+id/imageButton3"
+        android:layout_marginBottom="20dp"
+        android:layout_alignEnd="@+id/imageButton3" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton4"
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_alignStart="@+id/imageButton"
+        android:layout_alignBottom="@+id/imageButton3"
+        android:layout_toStartOf="@+id/imageButton3"
+
+        android:src = "@drawable/volume_off"
+        android:background="@null"
+
+        android:onClick="ToggleSound"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sound On / Off"
+        android:id="@+id/textView4"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageButton3"
+
+        android:textColor="#000000"
+        android:gravity="center"
+
+        />
+
 </RelativeLayout>
