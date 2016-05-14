@@ -11,6 +11,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 
 public class MainScreen extends Activity  {
 
+    public static int maxVolume = 10;
+    public static int currVolume = maxVolume;
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     private Handler mHandler;
@@ -47,6 +51,18 @@ public class MainScreen extends Activity  {
     Context context = this;
 
     private Button testButton;
+
+    private Button infoButton;
+
+
+    public void beaconInfo(View view){
+        Intent myIntent = new Intent(this, BeaconInformationActivity.class);
+        myIntent.putExtra("beaconName", button.getText().toString()); //Optional parameters
+        this.startActivity(myIntent);
+
+
+    }
+
 
     @TargetApi(21)
     public void createNotification(View view) {
@@ -87,6 +103,7 @@ public class MainScreen extends Activity  {
         }, 1000);
 
     }
+
 
     @Override
 
@@ -135,12 +152,37 @@ public class MainScreen extends Activity  {
 
         button = (Button)findViewById(R.id.button);
 
+        infoButton = (Button)findViewById(R.id.button3);
+
         testButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 createNotification(v);
             }
 
+        });
+
+
+        Button one = (Button) this.findViewById(R.id.button3);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
+        one.setOnClickListener(new OnClickListener(){
+
+            public void onClick(View v) {
+                    mp.start();
+
+
+            }
+        });
+
+
+        Button two = (Button)this.findViewById(R.id.button4);
+        two.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
+                mp.setVolume(1-log1,1-log1);
+                currVolume--;
+            }
         });
 
 
@@ -156,7 +198,7 @@ public class MainScreen extends Activity  {
 
                 //List of items to be show in  alert Dialog are stored in array of strings/char sequences
 
-                final String[] items = {"AAAAAA", "BBBBBBB", "CCCCCCC", "DDDDDDDD"};
+                final String[] items = {"Beacon 1", "Beacon 2", "Beacon 3", "Beacon 4"};
 
 
 

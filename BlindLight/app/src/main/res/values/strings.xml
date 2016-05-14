@@ -7,6 +7,12 @@
 
     <string name="test">TestNotification</string>
 
+    <string name="info">Beacon Info</string>
+
+    <string name="lala">Test sound</string>
+
+    <string name="test2">Test text</string>
+
 
 
 </resources>
