@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class MainScreen extends Activity  {
 
-    public static int maxVolume = 10;
+    public static int maxVolume = 50;
     public static int currVolume = maxVolume;
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
@@ -216,7 +216,8 @@ public class MainScreen extends Activity  {
                 float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
                 mp.setVolume(1-log1,1-log1);
                 currVolume--;
-                Log.v("v",currentBeacon.device.getName());
+                if (currentBeacon != null)
+                    Log.v("v",Integer.toString(currentBeacon.deviceRSSI));
             }
         });
 
@@ -264,12 +265,12 @@ public class MainScreen extends Activity  {
                         if (beacons[item].deviceRSSI != 1000) {
                             currentBeacon = beacons[item];
                         } else {
-                            int minRSSI = 200;
+                            int maxRSSI = -200;
                             int index = 0;
                             for (int i = 0; i < 5; i++){
                                 if (beacons[i].deviceRSSI == 1000) continue;
-                                if (beacons[i].deviceRSSI < minRSSI) {
-                                    minRSSI = beacons[i].deviceRSSI;
+                                if (beacons[i].deviceRSSI > maxRSSI) {
+                                    maxRSSI = beacons[i].deviceRSSI;
                                     index = i;
                                 }
                             }
