@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import android.widget.Button;
 
 public class MainScreen extends Activity  {
 
+    public static int maxVolume = 10;
+    public static int currVolume = maxVolume;
     private Button button;
 
     Context context = this;
@@ -51,6 +54,7 @@ public class MainScreen extends Activity  {
 
     }
 
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,29 @@ public class MainScreen extends Activity  {
                 createNotification(v);
             }
 
+        });
+
+
+        Button one = (Button) this.findViewById(R.id.button3);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
+        one.setOnClickListener(new OnClickListener(){
+
+            public void onClick(View v) {
+                    mp.start();
+
+
+            }
+        });
+
+
+        Button two = (Button)this.findViewById(R.id.button4);
+        two.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
+                mp.setVolume(1-log1,1-log1);
+                currVolume--;
+            }
         });
 
 
