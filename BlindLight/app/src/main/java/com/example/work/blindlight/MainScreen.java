@@ -37,6 +37,8 @@ import java.util.ArrayList;
 
 public class MainScreen extends Activity  {
 
+    public static float log1 = (float)0.0;
+
     public static int maxVolume = 50;
     public static int currVolume = maxVolume;
     private LeDeviceListAdapter mLeDeviceListAdapter;
@@ -128,6 +130,7 @@ public class MainScreen extends Activity  {
             beacons[i].device = null;
             beacons[i].deviceRSSI = -1000;
         }
+        currentBeacon = beacons[0];
 
         setContentView(R.layout.activity_main_screen);
 
@@ -136,6 +139,7 @@ public class MainScreen extends Activity  {
             requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION"}, 1);
         }
 
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager =
@@ -156,10 +160,28 @@ public class MainScreen extends Activity  {
                     while(true) {
                         sleep(1500);
                         updateBeacons();
+                        if (currentBeacon.deviceRSSI == 1000) {
+                            currVolume = 49;
+                        } else {
+                            int devRSSI = currentBeacon.deviceRSSI;
+                            if (devRSSI < -100) {
+                                devRSSI = -99;
+                            }
+                            if (devRSSI > -50){
+                                devRSSI = -51;
+                            }
+                            int volumeLevel = 100 - Math.abs(devRSSI);
+                            //Log.v("v",Integer.toString(volumeLevel))
+                            log1 = (float)(Math.log(maxVolume-volumeLevel)/Math.log(maxVolume));
+                            Log.v("v",Float.toString(log1));
+                            mp.setVolume(1-log1,1-log1);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+
             }
         };
 
@@ -194,31 +216,6 @@ public class MainScreen extends Activity  {
                 createNotification(v);
             }
 
-        });
-
-
-        Button one = (Button) this.findViewById(R.id.button3);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
-        one.setOnClickListener(new OnClickListener(){
-
-            public void onClick(View v) {
-                    mp.start();
-
-
-            }
-        });
-
-
-        Button two = (Button)this.findViewById(R.id.button4);
-        two.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
-                mp.setVolume(1-log1,1-log1);
-                currVolume--;
-                if (currentBeacon != null)
-                    Log.v("v",Integer.toString(currentBeacon.deviceRSSI));
-            }
         });
 
 
@@ -277,7 +274,9 @@ public class MainScreen extends Activity  {
                             currentBeacon = beacons[index];
                         }
 
+                        Log.v("b","beacon :"+currentBeacon.device.getName());
 
+                        mp.start();
 
                     }
 
@@ -326,6 +325,21 @@ public class MainScreen extends Activity  {
         });
 
 
+        Thread musicThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while(true) {
+                        sleep(1500);
+                        //Log.v("v",Float.toString(log1));
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        musicThread.start();
 
     }
 
