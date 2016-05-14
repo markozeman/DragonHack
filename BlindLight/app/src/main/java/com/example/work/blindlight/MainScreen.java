@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class MainScreen extends Activity  {
     private BluetoothAdapter mBluetoothAdapter;
     private Handler mHandler;
 
-    private Button button;
+    private ImageButton button;
 
     ViewHolder[] beacons;
     int num_devices = 0;
@@ -54,14 +55,14 @@ public class MainScreen extends Activity  {
     ViewHolder currentBeacon;
     Context context = this;
 
-    private Button testButton;
+    private ImageButton testButton;
 
-    private Button infoButton;
+    private ImageButton infoButton;
 
 
     public void beaconInfo(View view){
         Intent myIntent = new Intent(this, BeaconInformationActivity.class);
-        myIntent.putExtra("beaconName", button.getText().toString()); //Optional parameters
+        //myIntent.putExtra("beaconName", button.getText().toString()); //Optional parameters
         this.startActivity(myIntent);
 
 
@@ -203,12 +204,12 @@ public class MainScreen extends Activity  {
 
         threadReset.start();
 
-        testButton = (Button)findViewById(R.id.button2);
+        testButton = (ImageButton)findViewById(R.id.imageButton);
         //button's reference
 
-        button = (Button)findViewById(R.id.button);
+        button = (ImageButton)findViewById(R.id.imageButton2);
 
-        infoButton = (Button)findViewById(R.id.button3);
+        infoButton = (ImageButton)findViewById(R.id.imageButton3);
 
         testButton.setOnClickListener(new OnClickListener() {
             @Override
