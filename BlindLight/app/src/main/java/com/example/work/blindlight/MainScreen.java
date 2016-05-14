@@ -112,7 +112,7 @@ public class MainScreen extends Activity  {
                 //mBluetoothAdapter.stopLeScan(mLeScanCallback);
                 invalidateOptionsMenu();
             }
-        }, 1000);
+        }, 500);
         Log.w(".", "SIGNALS");
         for(int i=0; i<5;i++)
             Log.w(".", Integer.toString(beacons[i].deviceRSSI));
@@ -158,7 +158,7 @@ public class MainScreen extends Activity  {
             public void run() {
                 try {
                     while(true) {
-                        sleep(1500);
+                        sleep(500);
                         updateBeacons();
                         if (currentBeacon.deviceRSSI == 1000) {
                             currVolume = 49;
@@ -274,8 +274,6 @@ public class MainScreen extends Activity  {
                             currentBeacon = beacons[index];
                         }
 
-                        Log.v("b","beacon :"+currentBeacon.device.getName());
-
                         mp.start();
 
                     }
@@ -323,23 +321,6 @@ public class MainScreen extends Activity  {
             }
 
         });
-
-
-        Thread musicThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while(true) {
-                        sleep(1500);
-                        //Log.v("v",Float.toString(log1));
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        musicThread.start();
 
     }
 
