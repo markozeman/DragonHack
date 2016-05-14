@@ -47,6 +47,7 @@ public class MainScreen extends Activity  {
 
     ViewHolder[] beacons;
     int num_devices = 0;
+    boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
     Context context = this;
 
@@ -87,6 +88,14 @@ public class MainScreen extends Activity  {
         Log.v("v","Test");
     }
 
+
+    private void resetSeen(){
+        for(int i=0;i<5;i++){
+            if(!deviceseen[i])
+                beacons[i].deviceRSSI = -1000;
+            deviceseen[i] = false;
+        }
+    }
     /*
     * method scans for BLE devices and displays them
     *
@@ -101,7 +110,9 @@ public class MainScreen extends Activity  {
                 invalidateOptionsMenu();
             }
         }, 1000);
-
+        Log.w(".", "SIGNALS");
+        for(int i=0; i<5;i++)
+            Log.w(".", Integer.toString(beacons[i].deviceRSSI));
     }
 
 
@@ -111,6 +122,11 @@ public class MainScreen extends Activity  {
 
         super.onCreate(savedInstanceState);
         beacons = new ViewHolder[5];
+        for(int i=0;i<5;i++){
+            beacons[i] = new ViewHolder();
+            beacons[i].device = null;
+            beacons[i].deviceRSSI = -1000;
+        }
 
         setContentView(R.layout.activity_main_screen);
 
@@ -147,6 +163,22 @@ public class MainScreen extends Activity  {
         };
 
         thread.start();
+
+        Thread threadReset = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while(true) {
+                        sleep(5000);
+                        resetSeen();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        threadReset.start();
 
         testButton = (Button)findViewById(R.id.button2);
         //button's reference
@@ -364,8 +396,6 @@ public class MainScreen extends Activity  {
 
                             if (device.getName() != null)
                             {
-                                for( int i= 0; i<5;i++)
-                                    beacons[i] = null;
                                 switch (device.getName()){
                                     case "FF-145":
                                         num_devices = 0;
@@ -376,14 +406,9 @@ public class MainScreen extends Activity  {
                                     case "FF-160":
                                         num_devices = 2;
                                 }
-                                beacons[num_devices] = new ViewHolder();
                                 beacons[num_devices].device = device;
                                 beacons[num_devices].deviceRSSI = rssi;
-                                for( int i= 0; i<5;i++) {
-                                    if (beacons[i] == null)
-                                        continue;
-                                    Log.w("w", beacons[i].device.toString());
-                                }
+                                deviceseen[num_devices] = true;
                             }
                         }
                     });
