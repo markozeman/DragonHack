@@ -37,7 +37,9 @@ import java.util.ArrayList;
 
 public class MainScreen extends Activity  {
 
-    public static int maxVolume = 10;
+    public static float log1 = (float)0.0;
+
+    public static int maxVolume = 50;
     public static int currVolume = maxVolume;
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
@@ -49,6 +51,7 @@ public class MainScreen extends Activity  {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
+    ViewHolder currentBeacon;
     Context context = this;
 
     private Button testButton;
@@ -109,7 +112,7 @@ public class MainScreen extends Activity  {
                 //mBluetoothAdapter.stopLeScan(mLeScanCallback);
                 invalidateOptionsMenu();
             }
-        }, 1000);
+        }, 500);
         Log.w(".", "SIGNALS");
         for(int i=0; i<5;i++)
             Log.w(".", Integer.toString(beacons[i].deviceRSSI));
@@ -127,6 +130,7 @@ public class MainScreen extends Activity  {
             beacons[i].device = null;
             beacons[i].deviceRSSI = -1000;
         }
+        currentBeacon = beacons[0];
 
         setContentView(R.layout.activity_main_screen);
 
@@ -135,6 +139,7 @@ public class MainScreen extends Activity  {
             requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION"}, 1);
         }
 
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager =
@@ -153,12 +158,30 @@ public class MainScreen extends Activity  {
             public void run() {
                 try {
                     while(true) {
-                        sleep(1500);
+                        sleep(500);
                         updateBeacons();
+                        if (currentBeacon.deviceRSSI == 1000) {
+                            currVolume = 49;
+                        } else {
+                            int devRSSI = currentBeacon.deviceRSSI;
+                            if (devRSSI < -100) {
+                                devRSSI = -99;
+                            }
+                            if (devRSSI > -50){
+                                devRSSI = -51;
+                            }
+                            int volumeLevel = 100 - Math.abs(devRSSI);
+                            //Log.v("v",Integer.toString(volumeLevel))
+                            log1 = (float)(Math.log(maxVolume-volumeLevel)/Math.log(maxVolume));
+                            Log.v("v",Float.toString(log1));
+                            mp.setVolume(1-log1,1-log1);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+
             }
         };
 
@@ -196,29 +219,6 @@ public class MainScreen extends Activity  {
         });
 
 
-        Button one = (Button) this.findViewById(R.id.button3);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
-        one.setOnClickListener(new OnClickListener(){
-
-            public void onClick(View v) {
-                    mp.start();
-
-
-            }
-        });
-
-
-        Button two = (Button)this.findViewById(R.id.button4);
-        two.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
-                mp.setVolume(1-log1,1-log1);
-                currVolume--;
-            }
-        });
-
-
         //setting button's click and implementing the onClick method
 
         button.setOnClickListener(new OnClickListener() {
@@ -231,7 +231,7 @@ public class MainScreen extends Activity  {
 
                 //List of items to be show in  alert Dialog are stored in array of strings/char sequences
 
-                final String[] items = {"Beacon 1", "Beacon 2", "Beacon 3", "Beacon 4"};
+                final String[] items = {"Living room", "Kitchen", "Bedroom", "Bathroom"};
 
 
 
@@ -241,7 +241,7 @@ public class MainScreen extends Activity  {
 
                 //set the title for alert dialog
 
-                builder.setTitle("Choose names: ");
+                builder.setTitle("CHOOSE THE LOCATION: ");
 
 
 
@@ -257,7 +257,24 @@ public class MainScreen extends Activity  {
 
                         // setting the button text to the selected itenm from the list
 
-                        button.setText(items[item]);
+                        //button.setText(items[item]);
+                        Log.v("v",Integer.toString(item));
+                        if (beacons[item].deviceRSSI != 1000) {
+                            currentBeacon = beacons[item];
+                        } else {
+                            int maxRSSI = -200;
+                            int index = 0;
+                            for (int i = 0; i < 5; i++){
+                                if (beacons[i].deviceRSSI == 1000) continue;
+                                if (beacons[i].deviceRSSI > maxRSSI) {
+                                    maxRSSI = beacons[i].deviceRSSI;
+                                    index = i;
+                                }
+                            }
+                            currentBeacon = beacons[index];
+                        }
+
+                        mp.start();
 
                     }
 
@@ -304,8 +321,6 @@ public class MainScreen extends Activity  {
             }
 
         });
-
-
 
     }
 
