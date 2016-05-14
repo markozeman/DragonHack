@@ -110,6 +110,7 @@ public class MainScreen extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        beacons = new ViewHolder[5];
 
         setContentView(R.layout.activity_main_screen);
 
@@ -363,12 +364,25 @@ public class MainScreen extends Activity  {
 
                             if (device.getName() != null)
                             {
-                                if (device.getName().equals("FF-145") ||
-                                        device.getName().equals("FF-158")||
-                                        device.getName().equals("FF-160")) {
-                                    beacons[num_devices].device = device;
-                                    beacons[num_devices].deviceRSSI = rssi;
-                                    num_devices++;
+                                for( int i= 0; i<5;i++)
+                                    beacons[i] = null;
+                                switch (device.getName()){
+                                    case "FF-145":
+                                        num_devices = 0;
+                                        break;
+                                    case "FF-158":
+                                        num_devices = 1;
+                                        break;
+                                    case "FF-160":
+                                        num_devices = 2;
+                                }
+                                beacons[num_devices] = new ViewHolder();
+                                beacons[num_devices].device = device;
+                                beacons[num_devices].deviceRSSI = rssi;
+                                for( int i= 0; i<5;i++) {
+                                    if (beacons[i] == null)
+                                        continue;
+                                    Log.w("w", beacons[i].device.toString());
                                 }
                             }
                         }
