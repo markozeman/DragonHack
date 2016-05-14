@@ -48,6 +48,7 @@ public class MainScreen extends Activity  {
     ViewHolder[] beacons;
     int num_devices = 0;
 
+    ViewHolder currentBeacon;
     Context context = this;
 
     private Button testButton;
@@ -183,6 +184,7 @@ public class MainScreen extends Activity  {
                 float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
                 mp.setVolume(1-log1,1-log1);
                 currVolume--;
+                Log.v("v",currentBeacon.device.getName());
             }
         });
 
@@ -199,7 +201,7 @@ public class MainScreen extends Activity  {
 
                 //List of items to be show in  alert Dialog are stored in array of strings/char sequences
 
-                final String[] items = {"Beacon 1", "Beacon 2", "Beacon 3", "Beacon 4"};
+                final String[] items = {"Living room", "Kitchen", "Bedroom", "Bathroom"};
 
 
 
@@ -209,7 +211,7 @@ public class MainScreen extends Activity  {
 
                 //set the title for alert dialog
 
-                builder.setTitle("Choose names: ");
+                builder.setTitle("CHOOSE THE LOCATION: ");
 
 
 
@@ -225,7 +227,24 @@ public class MainScreen extends Activity  {
 
                         // setting the button text to the selected itenm from the list
 
-                        button.setText(items[item]);
+                        //button.setText(items[item]);
+                        Log.v("v",Integer.toString(item));
+                        if (beacons[item].deviceRSSI != 1000) {
+                            currentBeacon = beacons[item];
+                        } else {
+                            int minRSSI = 200;
+                            int index = 0;
+                            for (int i = 0; i < 5; i++){
+                                if (beacons[i].deviceRSSI == 1000) continue;
+                                if (beacons[i].deviceRSSI < minRSSI) {
+                                    minRSSI = beacons[i].deviceRSSI;
+                                    index = i;
+                                }
+                            }
+                            currentBeacon = beacons[index];
+                        }
+
+
 
                     }
 
