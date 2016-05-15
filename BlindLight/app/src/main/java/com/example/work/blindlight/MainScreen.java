@@ -49,6 +49,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
     public static boolean hasSound = false;
     public static ImageButton sound;
     public static float log1 = (float)0.0;
+    public static MediaPlayer mpKitchen;
 
     public static int maxVolume = 50;
     public static int currVolume = maxVolume;
@@ -63,6 +64,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
     final String[] location = {"forward", "left", "back", "right"};
+    final String[] items = {"Living room","Kitchen","Bedroom","Bathroom"};
 
     ViewHolder currentBeacon;
     Context context = this;
@@ -79,6 +81,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
     private Sensor mCompass;
 
     public void beaconInfo(View view){
+        mpKitchen.pause();
         Intent myIntent = new Intent(this, BeaconInformationActivity.class);
         myIntent.putExtra("beaconName", currentBeacon.room); //Optional parameters
         this.startActivity(myIntent);
@@ -188,7 +191,9 @@ public class MainScreen extends Activity  implements SensorEventListener {
         }
         currentBeacon = beacons[0];
 
+        mpKitchen = MediaPlayer.create(getApplicationContext(), R.raw.kitchenmusic);
         setContentView(R.layout.activity_main_screen);
+
 
         t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -204,7 +209,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
             requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION"}, 1);
         }
 
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.test2);
+
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager =
@@ -240,9 +245,9 @@ public class MainScreen extends Activity  implements SensorEventListener {
                             log1 = (float)(Math.log(maxVolume-volumeLevel)/Math.log(maxVolume));
                             Log.v("v",Float.toString(log1));
                             if (hasSound) {
-                                mp.setVolume(1-log1,1-log1);
+                                mpKitchen.setVolume(1-log1,1-log1);
                             } else {
-                                mp.setVolume(0.0f,0.0f);
+                                mpKitchen.setVolume(0.0f,0.0f);
                             }
 
                         }
@@ -280,7 +285,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
 
         infoButton = (ImageButton)findViewById(R.id.imageButton3);
 
-        Typeface typeFace= Typeface.createFromAsset(getAssets(),"fonts/Roboto-Thin.ttf");
+        Typeface typeFace= Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
         Typeface typefaceButtons = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
         TextView title = (TextView)findViewById(R.id.beaconNameTextView);
         title.setTypeface(typeFace);
@@ -297,19 +302,12 @@ public class MainScreen extends Activity  implements SensorEventListener {
         TextView fourthButton = (TextView)findViewById(R.id.textView);
         fourthButton.setTypeface(typefaceButtons);
 
-        testButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNotification(v);
-            }
-
-        });
 
         infoButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int selectedIndex = -2;
+                int selectedIndex = 0;
                 int maxRssi = -200;
                 for (int i = 0; i < 5; i++) {
                     if (maxRssi < beacons[i].deviceRSSI) {
@@ -361,9 +359,8 @@ public class MainScreen extends Activity  implements SensorEventListener {
                 builder.setTitle("CHOOSE THE LOCATION: ");
 
                 //set items to alert dialog. i.e. our array , which will be shown as list view in alert dialog
-                String[] items = new String[4];
-                for(int i=0;i<4;i++)
-                    items[i] = beacons[i].room;
+
+
                 builder.setItems(items, new DialogInterface.OnClickListener() {
 
 
@@ -372,12 +369,13 @@ public class MainScreen extends Activity  implements SensorEventListener {
 
                     public void onClick(DialogInterface dialog, int item) {
 
+                        int index = 0;
                         // setting the button text to the selected itenm from the list
                         if (beacons[item].deviceRSSI != 1000) {
                             currentBeacon = beacons[item];
                         } else {
                             int maxRSSI = -200;
-                            int index = 0;
+
                             for (int i = 0; i < 5; i++){
                                 if (beacons[i].deviceRSSI == 1000) continue;
                                 if (beacons[i].deviceRSSI > maxRSSI) {
@@ -394,11 +392,13 @@ public class MainScreen extends Activity  implements SensorEventListener {
                             locNum = 2;
                         if(azimuth > 225 && azimuth < 315)
                             locNum = 3;
+
                         String toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
                         Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                         t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
-                        mp.start();
+                        mpKitchen.start();
+
 
                     }
 
