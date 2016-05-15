@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f0f0d0">
 
 
     <TextView
@@ -46,8 +47,8 @@
             android:id="@+id/imageTemp" />
         <TextView
             android:text="15° C"
-            android:layout_marginRight="200px"
-            android:layout_marginLeft="40px"
+            android:layout_marginRight="230px"
+            android:layout_marginLeft="0px"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.2"
@@ -72,8 +73,8 @@
             android:id="@+id/imageLight" />
         <TextView
             android:text="Light"
-            android:layout_marginRight="200px"
-            android:layout_marginLeft="40px"
+            android:layout_marginRight="230px"
+            android:layout_marginLeft="0dp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.2"
@@ -98,8 +99,8 @@
             android:id="@+id/imageHumidity" />
         <TextView
             android:text="Humidity"
-            android:layout_marginRight="200px"
-            android:layout_marginLeft="40px"
+            android:layout_marginRight="230px"
+            android:layout_marginLeft="0dp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.2"

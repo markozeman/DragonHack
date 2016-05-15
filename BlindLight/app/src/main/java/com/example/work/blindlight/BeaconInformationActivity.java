@@ -2,6 +2,7 @@ package com.example.work.blindlight;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -56,6 +57,9 @@ public class BeaconInformationActivity extends Activity {
         humidityTextView = (TextView)findViewById(R.id.humidityTextView);
         beaconNameText = (TextView)findViewById(R.id.beaconNameTextView);
 
+        Typeface typeFace= Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+        beaconNameText.setTypeface(typeFace)
+        ;
         weather = (ImageView) findViewById(R.id.imageView);
 
 
@@ -88,7 +92,7 @@ public class BeaconInformationActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                String toSpeak = "The temperature is "+temp+", The ligth level is "+light+", the humidity is "+humid;
+                String toSpeak = "The temperature is "+temp+"elsius, The light level is "+light+", the humidity is "+humid;
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
             }
