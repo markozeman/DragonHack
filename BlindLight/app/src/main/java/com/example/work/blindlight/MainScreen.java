@@ -13,6 +13,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -39,8 +43,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 
-public class MainScreen extends Activity {
-
+public class MainScreen extends Activity  implements SensorEventListener {
 
 
     public static boolean hasSound = false;
@@ -59,7 +62,7 @@ public class MainScreen extends Activity {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
-    final String[] location = {"left", "right", "back", "forward"};
+    final String[] location = {"forward", "left", "back", "right"};
 
     ViewHolder currentBeacon;
     Context context = this;
@@ -72,7 +75,8 @@ public class MainScreen extends Activity {
     private TextToSpeech t1;
     private EditText write;
 
-
+    private SensorManager mSensorManager;
+    private Sensor mCompass;
 
     public void beaconInfo(View view){
         Intent myIntent = new Intent(this, BeaconInformationActivity.class);
@@ -133,6 +137,27 @@ public class MainScreen extends Activity {
             Log.w(".", Integer.toString(beacons[i].deviceRSSI));
     }
 
+    // The following method is required by the SensorEventListener interface;
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    // The following method is required by the SensorEventListener interface;
+// Hook this event to process updates;
+    float azimuth = 0;
+    public void onSensorChanged(SensorEvent event) {
+        azimuth = Math.round(event.values[0]);
+        // The other values provided are:
+        //  float pitch = event.values[1];
+        //  float roll = event.values[2];
+        TextView mTextView = (TextView) findViewById(R.id.textView24);
+        mTextView.setText("Heading: " + Float.toString(azimuth));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mCompass, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
     @Override
 
@@ -246,7 +271,6 @@ public class MainScreen extends Activity {
                 }
             }
         };
-
 
         threadReset.start();
 
@@ -364,7 +388,14 @@ public class MainScreen extends Activity {
                             }
                             currentBeacon = beacons[index];
                         }
-                        String toSpeak = "Head "+ location[item] + " to get to the " +beacons[item].room;
+                        int locNum = 0;
+                        if(azimuth > 45 && azimuth < 135)
+                            locNum = 1;
+                        if(azimuth > 135 && azimuth < 225)
+                            locNum = 2;
+                        if(azimuth > 225 && azimuth < 315)
+                            locNum = 3;
+                        String toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
                         Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                         t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -405,6 +436,8 @@ public class MainScreen extends Activity {
 
         });
 
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mCompass = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
     }
 
     // Adapter for holding devices found through scanning.
