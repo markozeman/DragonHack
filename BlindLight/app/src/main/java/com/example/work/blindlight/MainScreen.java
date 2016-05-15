@@ -59,7 +59,6 @@ public class MainScreen extends Activity {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
-    final String[] items = {"living room", "kitchen", "bedroom", "bathroom"};
     final String[] location = {"left", "right", "back", "forward"};
 
     ViewHolder currentBeacon;
@@ -145,6 +144,23 @@ public class MainScreen extends Activity {
             beacons[i] = new ViewHolder();
             beacons[i].device = null;
             beacons[i].deviceRSSI = -1000;
+            switch(i){
+                case 0:
+                    beacons[i].room = "Living room";
+                    break;
+                case 1:
+                    beacons[i].room = "Kitchen";
+                    break;
+                case 2:
+                    beacons[i].room = "Bedroom";
+                    break;
+                case 3:
+                    beacons[i].room = "Bathroom";
+                    break;
+                case 4:
+                    beacons[i].room = "Garage";
+                    break;
+            }
         }
         currentBeacon = beacons[0];
 
@@ -278,7 +294,7 @@ public class MainScreen extends Activity {
                         maxRssi = beacons[i].deviceRSSI;
                     }
                 }
-                String currentRoom = items[selectedIndex];
+                String currentRoom = beacons[selectedIndex].room;
                 String toSpeak = "You are in the "+currentRoom;
                 Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
@@ -322,6 +338,9 @@ public class MainScreen extends Activity {
                 builder.setTitle("CHOOSE THE LOCATION: ");
 
                 //set items to alert dialog. i.e. our array , which will be shown as list view in alert dialog
+                String[] items = new String[4];
+                for(int i=0;i<4;i++)
+                    items[i] = beacons[i].room;
                 builder.setItems(items, new DialogInterface.OnClickListener() {
 
 
@@ -345,7 +364,7 @@ public class MainScreen extends Activity {
                             }
                             currentBeacon = beacons[index];
                         }
-                        String toSpeak = "Head "+ location[item] + " to get to the " +items[item];
+                        String toSpeak = "Head "+ location[item] + " to get to the " +beacons[item].room;
                         Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                         t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -508,6 +527,7 @@ public class MainScreen extends Activity {
     static class ViewHolder {
         BluetoothDevice device;
         int deviceRSSI;
+        String room;
     }
 
 }
