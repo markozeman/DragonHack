@@ -63,9 +63,8 @@ public class MainScreen extends Activity  implements SensorEventListener {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
-    final String[] location = {"forward", "left", "back", "right"};
     final String[] items = {"Living room","Kitchen","Bedroom","Bathroom"};
-    final String[] location = {"forward", "left", "right", "back"};
+    String[] location = {"left", "back", "right", "forward"};
 
     ViewHolder currentBeacon;
     Context context = this;
@@ -386,19 +385,24 @@ public class MainScreen extends Activity  implements SensorEventListener {
                         }
                         currentBeacon = beacons[index];
 
-                        int locNum = 0;
+                        int locNum = 3;
                         if(azimuth > 45 && azimuth < 135)
-                            locNum = 1;
-                        if(azimuth > 135 && azimuth < 225)
                             locNum = 2;
+                        if(azimuth > 135 && azimuth < 225)
+                            locNum = 1;
                         if(azimuth > 225 && azimuth < 315)
-                            locNum = 3;
+                            locNum = 0;
 
-                        String toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
+
+                        Log.w("w",Double.toString(azimuth));
                         String toSpeak;
+                        location = new String[]{"forward", "right", "back", "left"};
                         toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
-                        if(item == 2)
-                            toSpeak = "Head "+ location[3-locNum] + " to get to the " +beacons[item].room;
+                        if(item == 2) {
+                            //location = new String[]{"back", "forward", "left", "right"};
+                            location = new String[]{"back", "right", "forward", "left"};
+                            toSpeak = "Head " + location[3-locNum] + " to get to the " + beacons[item].room;
+                        }
                         if(item == index)
                             toSpeak = "You are in the " + beacons[item].room;
                         Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
