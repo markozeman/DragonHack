@@ -79,7 +79,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
 
     public void beaconInfo(View view){
         Intent myIntent = new Intent(this, BeaconInformationActivity.class);
-        //myIntent.putExtra("beaconName", button.getText().toString()); //Optional parameters
+        myIntent.putExtra("beaconName", currentBeacon.room); //Optional parameters
         this.startActivity(myIntent);
 
 
@@ -148,8 +148,6 @@ public class MainScreen extends Activity  implements SensorEventListener {
         // The other values provided are:
         //  float pitch = event.values[1];
         //  float roll = event.values[2];
-        TextView mTextView = (TextView) findViewById(R.id.textView24);
-        mTextView.setText("Heading: " + Float.toString(azimuth));
     }
 
     @Override
@@ -279,14 +277,6 @@ public class MainScreen extends Activity  implements SensorEventListener {
         button = (ImageButton)findViewById(R.id.imageButton2);
 
         infoButton = (ImageButton)findViewById(R.id.imageButton3);
-
-        testButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNotification(v);
-            }
-
-        });
 
         infoButton.setOnClickListener(new OnClickListener() {
             @Override
