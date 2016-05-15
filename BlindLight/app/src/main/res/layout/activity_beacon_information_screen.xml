@@ -17,47 +17,116 @@
         android:textSize="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:shadowColor="#000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="5"
         android:singleLine="false" />
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50px"
-        android:stretchColumns="1">
-        <TableRow>
-            <TextView
-                android:text="Temperature:"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:padding="3dip"
-                android:layout_marginLeft="10px"
-                android:shadowColor="#000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="5"
-                android:singleLine="false"
-                />
-            <TextView
-                android:text="TempValue"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:padding="3dip" />
-        </TableRow>
 
-        <TableRow>
-            <TextView
-                android:text="Light Level:"
-                android:layout_marginLeft="10px"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:padding="3dip" />
-            <TextView
-                android:text="LightValue"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:padding="3dip" />
-        </TableRow>
-    </TableLayout>
+
+    <ImageView
+        android:layout_marginTop="50px"
+        android:layout_width="fill_parent"
+        android:layout_height="300px"
+        android:src="@drawable/rain"
+        android:id="@+id/imageView"
+        />
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="150px"
+        android:layout_marginTop="30px"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.8"
+            android:padding="10px"
+            android:src="@drawable/temp"
+            android:id="@+id/imageTemp" />
+        <TextView
+            android:text="15° C"
+            android:layout_marginRight="200px"
+            android:layout_marginLeft="40px"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:id="@+id/tempTextView"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="3dip" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="150px"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.8"
+            android:padding="10px"
+            android:src="@drawable/light"
+            android:id="@+id/imageLight" />
+        <TextView
+            android:text="Light"
+            android:layout_marginRight="200px"
+            android:layout_marginLeft="40px"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:id="@+id/lightTextView"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="3dip" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="150px"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.8"
+            android:padding="10px"
+            android:src="@drawable/humid"
+            android:id="@+id/imageHumidity" />
+        <TextView
+            android:text="Humidity"
+            android:layout_marginRight="200px"
+            android:layout_marginLeft="40px"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:id="@+id/humidityTextView"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="3dip" />
+
+    </LinearLayout>
+
+
+
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/speakButton"
+        android:layout_marginTop="20px"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mic"
+        android:background="@null"
+        android:onClick="speakInfo"
+        />
+
+
+
+
 
 
 </LinearLayout>

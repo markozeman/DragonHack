@@ -80,7 +80,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
 
     public void beaconInfo(View view){
         Intent myIntent = new Intent(this, BeaconInformationActivity.class);
-        //myIntent.putExtra("beaconName", button.getText().toString()); //Optional parameters
+        myIntent.putExtra("beaconName", currentBeacon.room); //Optional parameters
         this.startActivity(myIntent);
 
 
