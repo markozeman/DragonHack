@@ -150,7 +150,6 @@ public class MainScreen extends Activity  implements SensorEventListener {
         //  float pitch = event.values[1];
         //  float roll = event.values[2];
         TextView mTextView = (TextView) findViewById(R.id.textView24);
-        mTextView.setText("Heading: " + Float.toString(azimuth));
     }
 
     @Override
