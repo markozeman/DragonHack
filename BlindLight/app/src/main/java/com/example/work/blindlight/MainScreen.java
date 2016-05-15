@@ -296,20 +296,12 @@ public class MainScreen extends Activity {
 
                 //List of items to be show in  alert Dialog are stored in array of strings/char sequences
 
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-
-
                 //set the title for alert dialog
-
                 builder.setTitle("CHOOSE THE LOCATION: ");
 
-
-
                 //set items to alert dialog. i.e. our array , which will be shown as list view in alert dialog
-
                 builder.setItems(items, new DialogInterface.OnClickListener() {
 
 
@@ -348,11 +340,8 @@ public class MainScreen extends Activity {
                 });
 
                 //Creating CANCEL button in alert dialog, to dismiss the dialog box when nothing is selected
-
                 builder
-
                         .setCancelable(false)
-
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
 
 
@@ -360,11 +349,8 @@ public class MainScreen extends Activity {
                             @Override
 
                             public void onClick(DialogInterface dialog, int id) {
-
                                 //When clicked on CANCEL button the dalog will be dismissed
-
                                 dialog.dismiss();
-
                             }
 
                         });
@@ -372,13 +358,9 @@ public class MainScreen extends Activity {
 
 
                 // Creating alert dialog
-
                 AlertDialog alert = builder.create();
 
-
-
                 //Showing alert dialog
-
                 alert.show();
 
 
@@ -481,11 +463,19 @@ public class MainScreen extends Activity {
                                     case "FF-145":
                                         num_devices = 0;
                                         break;
-                                    case "FF-158":
+                                    case "FF-156":
                                         num_devices = 1;
                                         break;
-                                    case "FF-160":
+                                    case "FF-158":
                                         num_devices = 2;
+                                        break;
+                                    case "FF-160":
+                                        num_devices = 3;
+                                        break;
+                                    case "FF-162":
+                                        num_devices = 4;
+                                        break;
+
                                 }
                                 if(num_devices<0)
                                     return; 
