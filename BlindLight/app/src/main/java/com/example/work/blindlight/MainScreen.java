@@ -61,7 +61,7 @@ public class MainScreen extends Activity  implements SensorEventListener {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
-    final String[] location = {"forward", "left", "back", "right"};
+    final String[] location = {"forward", "left", "right", "back"};
 
     ViewHolder currentBeacon;
     Context context = this;
@@ -346,23 +346,22 @@ public class MainScreen extends Activity  implements SensorEventListener {
                     public void onClick(DialogInterface dialog, int item) {
 
                         // setting the button text to the selected itenm from the list
-
+                        int index = 0;
                         //button.setText(items[item]);
                         Log.v("v",Integer.toString(item));
-                        if (beacons[item].deviceRSSI != 1000) {
-                            currentBeacon = beacons[item];
-                        } else {
-                            int maxRSSI = -200;
-                            int index = 0;
-                            for (int i = 0; i < 5; i++){
-                                if (beacons[i].deviceRSSI == 1000) continue;
-                                if (beacons[i].deviceRSSI > maxRSSI) {
-                                    maxRSSI = beacons[i].deviceRSSI;
-                                    index = i;
-                                }
+
+                        currentBeacon = beacons[0];
+
+                        int maxRSSI = -200;
+
+                        for (int i = 0; i < 5; i++){
+                            if (beacons[i].deviceRSSI > maxRSSI) {
+                                maxRSSI = beacons[i].deviceRSSI;
+                                index = i;
                             }
-                            currentBeacon = beacons[index];
                         }
+                        currentBeacon = beacons[index];
+
                         int locNum = 0;
                         if(azimuth > 45 && azimuth < 135)
                             locNum = 1;
@@ -370,7 +369,12 @@ public class MainScreen extends Activity  implements SensorEventListener {
                             locNum = 2;
                         if(azimuth > 225 && azimuth < 315)
                             locNum = 3;
-                        String toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
+                        String toSpeak;
+                        toSpeak = "Head "+ location[locNum] + " to get to the " +beacons[item].room;
+                        if(item == 2)
+                            toSpeak = "Head "+ location[3-locNum] + " to get to the " +beacons[item].room;
+                        if(item == index)
+                            toSpeak = "You are in the " + beacons[item].room;
                         Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                         t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
