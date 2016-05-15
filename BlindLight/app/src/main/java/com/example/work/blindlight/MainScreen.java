@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,10 +35,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
-public class MainScreen extends Activity  {
+public class MainScreen extends Activity {
 
+
+    public static boolean hasSound = false;
+    public static ImageButton sound;
     public static float log1 = (float)0.0;
 
     public static int maxVolume = 50;
@@ -52,12 +57,20 @@ public class MainScreen extends Activity  {
     int num_devices = 0;
     boolean[] deviceseen = new boolean[]{false,false,false,false,false};
 
+    final String[] items = {"living room", "kitchen", "bedroom", "bathroom"};
+    final String[] location = {"left", "right", "back", "forward"};
+
     ViewHolder currentBeacon;
     Context context = this;
 
     private ImageButton testButton;
 
     private ImageButton infoButton;
+
+    //TEXT TO SPEECH
+    private TextToSpeech t1;
+    private EditText write;
+
 
 
     public void beaconInfo(View view){
@@ -135,6 +148,15 @@ public class MainScreen extends Activity  {
 
         setContentView(R.layout.activity_main_screen);
 
+        t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.US);
+                }
+            }
+        });
+
         if(23 <= Build.VERSION.SDK_INT) {
             //requestPermissions(["android.permission.ACCESS_FINE_LOCATION"], 1);
             requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION"}, 1);
@@ -175,7 +197,12 @@ public class MainScreen extends Activity  {
                             //Log.v("v",Integer.toString(volumeLevel))
                             log1 = (float)(Math.log(maxVolume-volumeLevel)/Math.log(maxVolume));
                             Log.v("v",Float.toString(log1));
-                            mp.setVolume(1-log1,1-log1);
+                            if (hasSound) {
+                                mp.setVolume(1-log1,1-log1);
+                            } else {
+                                mp.setVolume(0.0f,0.0f);
+                            }
+
                         }
                     }
                 } catch (InterruptedException e) {
@@ -219,6 +246,43 @@ public class MainScreen extends Activity  {
 
         });
 
+        infoButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int selectedIndex = -2;
+                int maxRssi = -200;
+                for (int i = 0; i < 5; i++) {
+                    if (maxRssi < beacons[i].deviceRSSI) {
+                        selectedIndex = i;
+                        maxRssi = beacons[i].deviceRSSI;
+                    }
+                }
+                String currentRoom = items[selectedIndex];
+                String toSpeak = "You are in the "+currentRoom;
+                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+
+            }
+        });
+
+
+        sound = (ImageButton)findViewById(R.id.imageButton4);
+
+        sound.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!hasSound) {
+                    sound.setImageResource(R.drawable.volume_up);
+                    hasSound = true;
+                } else {
+                    sound.setImageResource(R.drawable.volume_off);
+                    hasSound = false;
+                }
+
+            }
+        });
+
 
         //setting button's click and implementing the onClick method
 
@@ -231,8 +295,6 @@ public class MainScreen extends Activity  {
             public void onClick(View v) {
 
                 //List of items to be show in  alert Dialog are stored in array of strings/char sequences
-
-                final String[] items = {"Living room", "Kitchen", "Bedroom", "Bathroom"};
 
 
 
@@ -274,14 +336,16 @@ public class MainScreen extends Activity  {
                             }
                             currentBeacon = beacons[index];
                         }
+                        String toSpeak = "Head "+ location[item] + " to get to the " +items[item];
+                        Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                        t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
                         mp.start();
 
                     }
 
+
                 });
-
-
 
                 //Creating CANCEL button in alert dialog, to dismiss the dialog box when nothing is selected
 
