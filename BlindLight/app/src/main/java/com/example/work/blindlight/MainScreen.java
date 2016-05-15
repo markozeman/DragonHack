@@ -143,6 +143,23 @@ public class MainScreen extends Activity {
             beacons[i] = new ViewHolder();
             beacons[i].device = null;
             beacons[i].deviceRSSI = -1000;
+            switch(i){
+                case 0:
+                    beacons[i].room = "Living room";
+                    break;
+                case 1:
+                    beacons[i].room = "Kitchen";
+                    break;
+                case 2:
+                    beacons[i].room = "Bedroom";
+                    break;
+                case 3:
+                    beacons[i].room = "Bathroom";
+                    break;
+                case 4:
+                    beacons[i].room = "Garage";
+                    break;
+            }
         }
         currentBeacon = beacons[0];
 
@@ -491,6 +508,7 @@ public class MainScreen extends Activity {
     static class ViewHolder {
         BluetoothDevice device;
         int deviceRSSI;
+        String room;
     }
 
 }

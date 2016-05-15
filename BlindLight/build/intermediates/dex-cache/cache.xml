@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="/Users/klavdijstarman/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.1.1_7cac5316faebcfb94447f3e9fd2f56cb4b9f1821/classes.dex" />
-    </item>
-    <item
-        jar="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="e044ca372d9dcb83ec5c320880fdf0624a281317">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_ba24a843828aa9c114a259efc174d6ef970f9dee/classes.dex" />
-    </item>
-    <item
-        jar="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jar="/home/work/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
         jumboMode="true"
         revision="23.0.2"
         sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.1.1_d154718bcd77347d9e90170e087ec71a7edcf903/classes.dex" />
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.1.1_3c79b0934132665d4a0798e18da3df867c0b90fc/classes.dex" />
     </item>
     <item
-        jar="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jar="/home/work/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
         jumboMode="true"
         revision="23.0.2"
         sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.1.1_664fea72c377f5128d33c1ee3d6e498e7a3a3e04/classes.dex" />
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.1.1_e1af3b5a63381469fb46e129f5caf9a8258f4e36/classes.dex" />
     </item>
     <item
-        jar="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jar="/home/work/DragonHack/BlindLight/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="bb4213969a6136ed230e7e2bff8c2cb1e7a6f10f">
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_02ab4c49e440f4d16a848ec983978f083fdcee39/classes.dex" />
+    </item>
+    <item
+        jar="/home/work/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.1.1_c045540ca5bdc0351a2e59e6c04334576863c4fd/classes.dex" />
+    </item>
+    <item
+        jar="/home/work/DragonHack/BlindLight/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
         jumboMode="true"
         revision="23.0.2"
         sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.1.1_edf26583d39e9ad2d4f27dbf45f9bd404388f84c/classes.dex" />
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.1.1_b69ac9c12f08238644bbc1e3c6ea0ad7d865d523/classes.dex" />
     </item>
     <item
-        jar="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="/home/work/DragonHack/BlindLight/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="8f425477ec5231fbf87a853a89a6f454d270e7f6">
-        <dex dex="/Users/klavdijstarman/AndroidStudioProjects/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_d056cc9b77bb2c458c9ce0f335b03275a25203a6/classes.dex" />
+        sha1="f220728f2fcd770d33ea3538080dfd169dd754ef">
+        <dex dex="/home/work/DragonHack/BlindLight/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_df18eaed26e1d3b9f89dbcef89a4700e86e02c5f/classes.dex" />
     </item>
 
 </items>
