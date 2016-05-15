@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -39,6 +40,7 @@ import java.util.Locale;
 
 
 public class MainScreen extends Activity {
+
 
 
     public static boolean hasSound = false;
@@ -229,6 +231,7 @@ public class MainScreen extends Activity {
             }
         };
 
+
         threadReset.start();
 
         testButton = (ImageButton)findViewById(R.id.imageButton);
@@ -237,6 +240,23 @@ public class MainScreen extends Activity {
         button = (ImageButton)findViewById(R.id.imageButton2);
 
         infoButton = (ImageButton)findViewById(R.id.imageButton3);
+
+        Typeface typeFace= Typeface.createFromAsset(getAssets(),"fonts/Roboto-Thin.ttf");
+        Typeface typefaceButtons = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        TextView title = (TextView)findViewById(R.id.beaconNameTextView);
+        title.setTypeface(typeFace);
+
+        TextView firstButton = (TextView)findViewById(R.id.textView23);
+        firstButton.setTypeface(typefaceButtons);
+
+        TextView secondButton = (TextView)findViewById(R.id.textView24);
+        secondButton.setTypeface(typefaceButtons);
+
+        TextView thirdButton = (TextView)findViewById(R.id.textView2);
+        thirdButton.setTypeface(typefaceButtons);
+
+        TextView fourthButton = (TextView)findViewById(R.id.textView);
+        fourthButton.setTypeface(typefaceButtons);
 
         testButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -311,9 +331,6 @@ public class MainScreen extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
 
                         // setting the button text to the selected itenm from the list
-
-                        //button.setText(items[item]);
-                        Log.v("v",Integer.toString(item));
                         if (beacons[item].deviceRSSI != 1000) {
                             currentBeacon = beacons[item];
                         } else {
